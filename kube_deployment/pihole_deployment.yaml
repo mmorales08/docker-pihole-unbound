@@ -26,7 +26,7 @@ spec:
       containers:
         - name: pihole
           # https://hub.docker.com/r/pihole/pihole/tags
-          image: mmorales08/docker-pihole-unbound:2024.03.2
+          image: mmorales08/docker-pihole-unbound:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
