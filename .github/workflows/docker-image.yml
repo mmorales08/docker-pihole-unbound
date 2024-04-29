@@ -27,7 +27,7 @@ jobs:
 
     - name: Set variables
       run: |
-        VER=$(cat  ${{ github.workspace }}/VERSION)
+        VER=$(cat  ${{ github.workspace }}/../VERSION)
         echo "VERSION=$VER" >> $GITHUB_ENV
 
     - uses: actions/checkout@v4
