@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker buildx build --build-arg PIHOLE_VERSION=2024.03.2 --platform linux/arm/v7,linux/arm64/v8,linux/amd64 -t mmorales08/docker-pihole-unbound:2024.03.2
+      run: docker buildx build --build-arg PIHOLE_VERSION=2024.03.2 --platform linux/arm/v7,linux/arm64/v8,linux/amd64 -t mmorales08/docker-pihole-unbound:2024.03.2 .
