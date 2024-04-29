@@ -1,4 +1,4 @@
-name: Test Docker Image
+name: Push Docker Image
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  build:
+  push:
 
     runs-on: ubuntu-latest
 
