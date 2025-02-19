@@ -3,7 +3,7 @@ FROM pihole/pihole:${PIHOLE_VERSION:-latest}
 
 ENV DEBIAN_FRONTEND=noninteractive 
 
-RUN apk update && apk add unbound
+RUN apt-get update && apt-get install unbound -y
 
 COPY lighttpd-external.conf /etc/lighttpd/external.conf 
 COPY unbound-pihole.conf /etc/unbound/unbound.conf.d/pi-hole.conf
