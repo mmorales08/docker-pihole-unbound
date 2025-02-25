@@ -31,12 +31,12 @@ spec:
           env:
             - name: TZ
               value: "America/Chicago"
-            - name: WEBPASSWORD
+            - name: FTLCONF_webserver_api_password
               valueFrom:
                 secretKeyRef:
                   name: pihole-admin
                   key: password
-            - name: PIHOLE_DNS_
+            - name: FTLCONF_dns_upstreams
               value: 127.0.0.1#5335
             - name: DNSSEC
               value: "true"
@@ -44,7 +44,7 @@ spec:
               value: all
             - name: FTLCONF_LOCAL_IPV4
               ## your local pihole dns
-              value: 10.0.1.2
+              value: 10.0.1.28
           securityContext:
             privileged: true
           ports:
