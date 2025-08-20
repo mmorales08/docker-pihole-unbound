@@ -1,8 +1,6 @@
 ARG PIHOLE_VERSION
 FROM pihole/pihole:${PIHOLE_VERSION:-latest}
 
-ENV DEBIAN_FRONTEND=noninteractive 
-
 RUN apt-get update && apt-get install unbound -y
 
 COPY lighttpd-external.conf /etc/lighttpd/external.conf 
@@ -11,5 +9,7 @@ COPY 99-edns.conf /etc/dnsmasq.d/99-edns.conf
 
 RUN mkdir -p /etc/services.d/unbound
 COPY unbound-run /etc/services.d/unbound/run
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /custom-entrypoint.sh
 
-ENTRYPOINT ./s6-init
+ENTRYPOINT ["/entrypoint.sh"]
