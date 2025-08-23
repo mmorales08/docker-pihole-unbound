@@ -26,27 +26,33 @@ spec:
       containers:
         - name: pihole
           # https://hub.docker.com/r/pihole/pihole/tags
-          image: mmorales08/docker-pihole-unbound:latest
+          image: mmorales08/docker-pihole-unbound:2025.08.0
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
               value: "America/Chicago"
-            - name: WEBPASSWORD
+            - name: FTLCONF_webserver_api_password
               valueFrom:
                 secretKeyRef:
                   name: pihole-admin
                   key: password
-            - name: PIHOLE_DNS_
+            - name: FTLCONF_dns_upstreams
               value: 127.0.0.1#5335
-            - name: DNSSEC
+            - name: FTLCONF_dns_dnssec
               value: "true"
-            - name: DNSMASQ_LISTENING
+            - name: FTLCONF_dns_listeningMode
               value: all
-            - name: FTLCONF_LOCAL_IPV4
-              ## your local pihole dns
+            - name: FTLCONF_dns_reply_host_IPv4
               value: 10.0.1.2
+            - name: FTLCONF_ntp_ipv4_active
+              value: "false"
+            - name: FTLCONF_ntp_ipv6_active
+              value: "false"
           securityContext:
             privileged: true
+            capabilities:
+              add:
+                - SYS_TIME
           ports:
             - containerPort: 53
               protocol: TCP
@@ -63,11 +69,10 @@ spec:
             - containerPort: 5335
               protocol: TCP
           livenessProbe:
-              httpGet:
-                path: /admin/index.php
-                port: 80
+              tcpSocket:
+                port: dns-tcp
               initialDelaySeconds: 60
-              periodSeconds: 5
+              periodSeconds: 30
           volumeMounts:
             - name: etc
               mountPath: /etc/pihole
@@ -75,8 +80,8 @@ spec:
               mountPath: /etc/dnsmasq.d
           resources:
             requests:
-              memory: 512Mi
-              cpu: 500m
+              memory: 1Gi
+              cpu: 1
             limits:
               memory: 2Gi
               cpu: 2
